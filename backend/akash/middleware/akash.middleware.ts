@@ -14,15 +14,23 @@ class AkashMiddleware {
             '&',';'
         ];
 
-        // Do character check here
-        const reqCommandContainsInvalidCharacters: boolean = req.body.command;
+        // Innocent before proven guilty
+        let reqCommandContainsValidCharacters: boolean = true;
 
-        if(reqCommandContainsInvalidCharacters) {
+        // Check if the command contains invalid characters
+        invalidCharacters.forEach((character) => {
+            if(req.body.command.includes(character)) {
+                reqCommandContainsValidCharacters = false;
+                return;
+            }
+        });
+
+        if(reqCommandContainsValidCharacters) {
+            next();
+        } else {
             res.status(400).send({
                 error: `Invalid character found in command, commands cannot contain: ${invalidCharacters}`
             });
-        } else {
-            next();
         }
     }
 }
