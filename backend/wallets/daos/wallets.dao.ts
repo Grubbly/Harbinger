@@ -6,6 +6,7 @@ import debug from "debug";
 import { Wallet } from "../entities/wallets.entity";
 
 const log: debug.IDebugger = debug('app:wallet-dao');
+
 class WalletsDao {
 
     constructor() {
