@@ -129,5 +129,17 @@ describe('when accessing wallets endpoints the API', function() {
                 });
             expect(res.status).to.equal(404);
         });
+
+        it('should disallow a PUT to /wallets/:walletId with a malformed body', async function () {
+            // Missing firstName and lastName
+            const res = await request
+                .put(`/wallets/i-do-not-exist`)
+                .send({
+                    email: firstWalletBody.email,
+                    password: firstWalletBody.password,
+                    permissionFlags: 256,
+                });
+            expect(res.status).to.equal(404);
+        });
     });
 });

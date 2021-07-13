@@ -1,7 +1,5 @@
 import { PostRawCommandDto } from '../dto/post.raw.command.dto';
 import debug from 'debug';
-import { exec as execSync } from 'child_process';
-import { ExecResultsDto } from '../dto/exec.results.dto';
 import ExecPromise from '../../common/helpers/helper.exec.promise';
 
 const log: debug.IDebugger = debug('app:akash-dao');
