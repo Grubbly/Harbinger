@@ -21,7 +21,7 @@ import debug from 'debug';
 
 // Function decorator capability
 import "reflect-metadata";
-import akashBase from './akash/cli/akash.base';
+import akashBase from './akash/services/akash.service';
 import { ExecException } from 'child_process';
 
  // Variables

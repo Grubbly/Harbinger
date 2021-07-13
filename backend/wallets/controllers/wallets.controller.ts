@@ -16,7 +16,6 @@ const log: debug.IDebugger = debug('app:wallets-controller');
 class WalletsController {
     async listWallets(req: express.Request, res: express.Response) {
         const wallets = await walletsService.list(100, 0);
-        log("GOT: ", wallets);
         res.status(200).send(wallets);
     }
 

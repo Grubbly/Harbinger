@@ -1,4 +1,4 @@
-import { PostRawCommand } from '../dto/post.raw.command.dto';
+import { PostRawCommandDto } from '../dto/post.raw.command.dto';
 import debug from 'debug';
 import { exec } from 'child_process';
 
@@ -9,7 +9,7 @@ class AkashDao {
         log('Created new instance of AkashDao');
     }
 
-    async postRawCommand(commandFields: PostRawCommand) {
+    async postRawCommand(commandFields: PostRawCommandDto) {
         log('Running raw command: ', commandFields.command);
         
         const execResults =  await exec(
@@ -27,3 +27,5 @@ class AkashDao {
         return execResults;
     }
 }
+
+export default new AkashDao();
