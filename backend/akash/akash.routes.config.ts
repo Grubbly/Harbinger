@@ -19,9 +19,20 @@ export class AkashRoutes extends CommonRoutesConfig {
                 body('command').isString().notEmpty()
                     .withMessage("Command is empty or not a string"),
                 BodyValidationMiddleware.verifyBodyFieldsErrors,
-                akashMiddleware.validateNoInvalidCharacters,
+                akashMiddleware.validateNoInvalidCharactersInCommand,
                 akashController.runRawCommand
             );
+
+        // TODO: needs name check
+        this.app.route('/akash/keys')
+            .post(
+                body('name').isString().notEmpty()
+                    .withMessage("Name cannot be empty"),
+                body('flags').isArray(),
+                BodyValidationMiddleware.verifyBodyFieldsErrors,
+                akashMiddleware.validateNoInvalidCharactersInFlags,
+                akashController.addWallet
+            )
 
         return this.app;
     }
