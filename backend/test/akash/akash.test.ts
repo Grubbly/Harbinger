@@ -29,7 +29,7 @@ describe('when accessing akash endpoints the API', function() {
         })
     });
 
-    it('should allow valid akash CLI commands to POST to /akash', async function() {
+    it('should allow POST to /akash if valid akash CLI commands are sent', async function() {
         // Note: commands are automatically prefixed with 'akash;
         // so only arguments and flag are necessary in the command
         const commandBody = {
@@ -42,7 +42,7 @@ describe('when accessing akash endpoints the API', function() {
         expect(res.body.stderr).to.be.empty;
     })
 
-    it('should not crash if an invalid POST to /akash occurs', async function() {
+    it('POST to /akash should not crash if an error occurs in exec', async function() {
         // Expands to 'akash akash --help' at execution, which should error out
         const commandBody = {
             command: 'akash --help'
@@ -54,7 +54,7 @@ describe('when accessing akash endpoints the API', function() {
         expect(res.body.stderr).to.be.a('string');
     })
 
-    it('should not accept a malformed POST command body to /akash', async function() {
+    it('should not accept a POST to /akash if body is malformed', async function() {
         const malformedBody = {
             malformed: 'ew gross'
         }
@@ -63,7 +63,7 @@ describe('when accessing akash endpoints the API', function() {
         expect(res.status).to.equal(400);
     })
 
-    it('should not allow invalid characters in command POST to /akash', async function() {
+    it('should disallow a POST to /akash if invalid characters are in the command', async function() {
         // Unix command stringing
         const badCommand1 = {
             command: '--help ;'
