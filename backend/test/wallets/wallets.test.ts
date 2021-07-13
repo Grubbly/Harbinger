@@ -1,7 +1,6 @@
 import supertest, { SuperAgentTest } from 'supertest';
 import { expect } from 'chai';
 import shortid from 'shortid';
-import { Wallet } from '../../wallets/entities/wallets.entity';
 import { Connection, getConnection } from 'typeorm'
 import init from '../../app';
 import express from 'express';

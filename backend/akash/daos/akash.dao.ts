@@ -1,6 +1,8 @@
 import { PostRawCommandDto } from '../dto/post.raw.command.dto';
 import debug from 'debug';
-import { exec } from 'child_process';
+import { exec as execSync } from 'child_process';
+import { ExecResultsDto } from '../dto/exec.results.dto';
+import ExecPromise from '../../common/helpers/helper.exec.promise';
 
 const log: debug.IDebugger = debug('app:akash-dao');
 
@@ -10,21 +12,17 @@ class AkashDao {
     }
 
     async postRawCommand(commandFields: PostRawCommandDto) {
-        log('Running raw command: ', commandFields.command);
+        const command = 'akash ' + commandFields.command;
+        log('Running raw command: ', command);
         
-        const execResults =  await exec(
-            commandFields.command, 
-            async (error, response, errorMessage) => {
-                log('Error: ', error);
-                log('Response ', response);
-                log('Error Message: ', errorMessage);
-
-                return {error, response, errorMessage};
-            }
-        );
-
-        log('Command executed with:\n', execResults);
-        return execResults;
+        try {
+            const results = await ExecPromise.exec(command);    
+            return results;
+        } 
+        catch(error) {
+            log("Executing command resulted in error:", error);
+            return error;
+        }
     }
 }
 

@@ -21,6 +21,7 @@ import debug from 'debug';
 
 // Function decorator capability
 import "reflect-metadata";
+import { AkashRoutes } from './akash/akash.routes.config';
 
  // Variables
  const app: express.Application = express();
@@ -61,11 +62,13 @@ const init = sqliteService.connectWithRetry()
     // Initialize logger
     app.use(expressWinston.logger(loggerOptions));
             
-    // Initialize WalletRoutes using the configured app
+    // Initialize routes using the configured app
     const walletRoutes: WalletsRoutes = new WalletsRoutes(app);
+    const akashRoutes: AkashRoutes = new AkashRoutes(app);
 
     // Populate the routes array
     routes.push(walletRoutes);
+    routes.push(akashRoutes);
 
     // Test routes
     const testMessage: String = `Server running at localhost:${port}`;

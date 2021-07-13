@@ -1,5 +1,4 @@
 import express from 'express';
-import akashService from '../services/akash.service';
 import debug from 'debug';
 
 const log: debug.IDebugger = debug('app:akash-middleware');
@@ -14,7 +13,7 @@ class AkashMiddleware {
             '&',';'
         ];
 
-        // Innocent before proven guilty
+        // Innocent before proven guilty :P
         let reqCommandContainsValidCharacters: boolean = true;
 
         // Check if the command contains invalid characters
@@ -34,3 +33,5 @@ class AkashMiddleware {
         }
     }
 }
+
+export default new AkashMiddleware();
