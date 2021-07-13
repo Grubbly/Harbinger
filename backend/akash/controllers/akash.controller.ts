@@ -12,3 +12,5 @@ class AkashController {
         res.status(201).send(results);
     }
 }
+
+export default new AkashController();

@@ -2,7 +2,8 @@ import express from 'express'
 import walletsService from '../services/wallets.service'
 import debug from 'debug'
 
-const log: debug.IDebugger = debug('app:wallets-controller');
+const log: debug.IDebugger = debug('app:wallets-middleware');
+
 class WalletsMiddleware {
     async validateRequiredWalletBodyFields(
         req: express.Request,

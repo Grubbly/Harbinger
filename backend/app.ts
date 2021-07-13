@@ -21,8 +21,6 @@ import debug from 'debug';
 
 // Function decorator capability
 import "reflect-metadata";
-import akashBase from './akash/services/akash.service';
-import { ExecException } from 'child_process';
 
  // Variables
  const app: express.Application = express();
@@ -73,11 +71,6 @@ const init = sqliteService.connectWithRetry()
     const testMessage: String = `Server running at localhost:${port}`;
     app.get('/', (req: express.Request, res: express.Response) => {
         res.status(200).send(testMessage);
-    });
-    app.post('/akash', async (req: express.Request, res: express.Response) => {
-        console.log("AKASH POST GOT", req.body);
-        let output = await akashBase.run(req.body.command);
-        res.status(201).send(output);
     });
 
     server.listen(port, () => {

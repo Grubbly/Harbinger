@@ -5,7 +5,7 @@ import express from 'express';
 
 // Data validation 
 import BodyValidationMiddleware from "../common/middleware/body.validation.middleware";
-import { body } from 'express-validator'
+import { body } from 'express-validator';
 
 
 export class WalletsRoutes extends CommonRoutesConfig {
