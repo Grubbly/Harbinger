@@ -30,7 +30,7 @@ class AkashDao {
         return this.exec(command);
     }
 
-    async postKeysAdd(commandFields: PostKeysAddDto) {
+    async createWallet(commandFields: PostKeysAddDto) {
         // Formulate base command with required fields
         let command = `akash keys add ${commandFields.name}`;
         
@@ -43,6 +43,16 @@ class AkashDao {
         command += ` --output json `;
 
         log(`Running akash keys add command: ${command}`);
+        return this.exec(command);
+    }
+
+    async getWallets() {
+        const command = `akash keys show --output json`;
+        return this.exec(command);
+    }
+
+    async getWalletByName(walletName: string) {
+        const command = `akash keys show ${walletName} --output json`
         return this.exec(command);
     }
 }

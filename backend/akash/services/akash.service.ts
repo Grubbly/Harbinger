@@ -17,8 +17,16 @@ class AkashService {
         return akashDao.postRawCommand(rawCommandFields);
     }
 
-    async addWallet(addWalletFields: PostKeysAddDto) {
-        return akashDao.postKeysAdd(addWalletFields);
+    async createWallte(addWalletFields: PostKeysAddDto) {
+        return akashDao.createWallet(addWalletFields);
+    }
+
+    async getWallets() {
+        return akashDao.getWallets();
+    }
+
+    async getWalletByName(walletName: string) {
+        return akashDao.getWalletByName(walletName);
     }
 }
 

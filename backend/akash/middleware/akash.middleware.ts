@@ -5,6 +5,15 @@ const log: debug.IDebugger = debug('app:akash-middleware');
 
 class AkashMiddleware {
 
+    async extractWalletName(
+        req: express.Request,
+        res: express.Response,
+        next: express.NextFunction
+    ) {
+        req.body.walletName = req.params.walletName;
+        next();
+    }
+
     async validateNoInvalidCharactersInCommand(
         req: express.Request,
         res: express.Response,

@@ -13,28 +13,39 @@ export class AkashRoutes extends CommonRoutesConfig {
     }
 
     configureRoutes(): express.Application {
+        this.app.param('walletName', akashMiddleware.extractWalletName);
+
         this.app.route('/akash')
             .post(
                 // must not contain ; or &
                 body('command').isString().notEmpty()
                     .withMessage("Command is empty or not a string"),
                 BodyValidationMiddleware.verifyBodyFieldsErrors,
-                akashMiddleware.validateNoInvalidCharactersInCommand,
+                akashMiddleware.validateNoInvalidCharactersInCommand, // TODO: replace me
                 akashController.runRawCommand
             );
 
-        // TODO: needs name check
         this.app.route('/akash/keys')
             .post(
-                // TODO: Change invalid character checks to these
+                // TODO: Change invalid character checks to inline here
                 body('name').isString().notEmpty()
                     .withMessage("Name cannot be empty or contain & or ;"),
                 body('flags').isArray()
                     .withMessage("If no flags, make sure to include flags: [] in request body (ie set flags equal to empty array)."),
                 BodyValidationMiddleware.verifyBodyFieldsErrors,
-                akashMiddleware.validateNoInvalidCharactersInName,
-                akashMiddleware.validateNoInvalidCharactersInFlags,
-                akashController.addWallet
+                akashMiddleware.validateNoInvalidCharactersInName, // TODO: replace me
+                akashMiddleware.validateNoInvalidCharactersInFlags, // TODO: replace me
+                akashController.createWallet
+            ).get(
+                
+            )
+
+        this.app.route('/akash/keys/:walletName')
+            .all(
+                akashMiddleware.validateWalletExists
+            )
+            .get(
+                // getWalled
             )
 
         return this.app;

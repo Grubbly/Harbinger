@@ -55,7 +55,7 @@ describe('when accessing akash endpoints the API', function() {
         expect(res.body.stderr).to.be.a('string');
     })
 
-    it('should not accept a POST to /akash if body is malformed', async function() {
+    it('should disallow a POST to /akash if body is malformed', async function() {
         const malformedBody = {
             malformed: 'ew gross'
         }

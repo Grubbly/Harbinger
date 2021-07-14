@@ -20,8 +20,8 @@ class AkashController {
         }
     }
 
-    async addWallet(req: express.Request, res: express.Response) {
-        const results = await akashService.addWallet(req.body);
+    async createWallet(req: express.Request, res: express.Response) {
+        const results = await akashService.createWallte(req.body);
 
         if(results.stderr) {
             // Bad command was executed, send error
@@ -33,6 +33,18 @@ class AkashController {
             const jsonifiedStdout = JSON.parse(results.stdout);
             res.status(201).send(jsonifiedStdout);
         }
+    }
+
+    async getWallets(req: express.Request, res: express.Response) {
+        const results = await akashService.getWallets();
+        const jsonifiedWallets = JSON.parse(results.stdout);
+        res.status(200).send(jsonifiedWallets);
+    }
+
+    async getWalletByName(req: express.Request, res: express.Response) {
+        const results = await akashService.getWalletByName(req.body.walletName);
+        const jsonifiedWallet = JSON.parse(results.stdout);
+        res.status(200).send(jsonifiedWallet);
     }
 }
 
