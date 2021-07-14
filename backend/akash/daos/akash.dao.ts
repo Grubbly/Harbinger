@@ -1,7 +1,7 @@
 import { PostRawCommandDto } from '../dto/post.raw.command.dto';
 import debug from 'debug';
-import ExecPromise from '../../common/helpers/helper.exec.promise';
 import { PostKeysAddDto } from '../dto/post.keys.add.dto';
+import ExecPromiseService from '../../common/services/exec.service';
 
 const log: debug.IDebugger = debug('app:akash-dao');
 
@@ -10,24 +10,11 @@ class AkashDao {
         log('Created new instance of AkashDao');
     }
 
-    // Helper wrapper around ExecPromise.exec that includes
-    // try catch error handling.
-    private async exec(command: string) {
-        try {
-            const results = await ExecPromise.exec(command);    
-            return results;
-        } 
-        catch(error) {
-            log(`Executing command resulted in error: ${error}`);
-            return error;
-        }
-    }
-
     async postRawCommand(commandFields: PostRawCommandDto) {
         const command = `akash ${commandFields.command}`;
         log(`Running raw command: ${command}`);
         
-        return this.exec(command);
+        return await ExecPromiseService.exec(command);
     }
 
     async createWallet(commandFields: PostKeysAddDto) {
@@ -43,17 +30,17 @@ class AkashDao {
         command += ` --output json `;
 
         log(`Running akash keys add command: ${command}`);
-        return this.exec(command);
+        return await ExecPromiseService.exec(command);
     }
 
     async getWallets() {
-        const command = `akash keys show --output json`;
-        return this.exec(command);
+        const command = `akash keys list --output json`;
+        return await ExecPromiseService.exec(command);
     }
 
     async getWalletByName(walletName: string) {
         const command = `akash keys show ${walletName} --output json`
-        return this.exec(command);
+        return await ExecPromiseService.exec(command);
     }
 }
 

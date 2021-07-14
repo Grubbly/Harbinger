@@ -37,6 +37,7 @@ class AkashController {
 
     async getWallets(req: express.Request, res: express.Response) {
         const results = await akashService.getWallets();
+        log(`got ${results}`)
         const jsonifiedWallets = JSON.parse(results.stdout);
         res.status(200).send(jsonifiedWallets);
     }

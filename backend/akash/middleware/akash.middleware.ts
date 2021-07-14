@@ -1,5 +1,6 @@
 import express from 'express';
 import debug from 'debug';
+import ExecPromiseService from '../../common/services/exec.service';
 
 const log: debug.IDebugger = debug('app:akash-middleware');
 
@@ -99,6 +100,22 @@ class AkashMiddleware {
         } else {
             res.status(400).send({
                 error: `Invalid character found in name, names cannot contain: ${invalidCharacters}`
+            });
+        }
+    }
+
+    async validateWalletExists(
+        req: express.Request,
+        res: express.Response,
+        next: express.NextFunction
+    ) {
+        const results = await ExecPromiseService.exec(`akash keys show ${req.body.walletName} --output json`);
+    
+        if(!results.stderr) {
+            next();
+        } else {
+            res.status(404).send({
+                error: `Could not find wallet named ${req.body.walletName} on this device`
             });
         }
     }

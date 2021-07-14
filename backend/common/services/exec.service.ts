@@ -10,7 +10,7 @@ class ExecPromiseService {
     
     // Helper wrapper around ExecPromise.exec that includes
     // try catch error handling.
-    private async exec(command: string) {
+    async exec(command: string) {
         try {
             const results = await ExecPromise.exec(command);    
             return results;

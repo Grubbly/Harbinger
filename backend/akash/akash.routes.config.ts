@@ -6,6 +6,7 @@ import express from 'express';
 import BodyValidationMiddleware from "../common/middleware/body.validation.middleware";
 import { body } from "express-validator";
 import akashMiddleware from "./middleware/akash.middleware";
+import akashService from "./services/akash.service";
 
 export class AkashRoutes extends CommonRoutesConfig {
     constructor(app: express.Application) {
@@ -36,17 +37,12 @@ export class AkashRoutes extends CommonRoutesConfig {
                 akashMiddleware.validateNoInvalidCharactersInName, // TODO: replace me
                 akashMiddleware.validateNoInvalidCharactersInFlags, // TODO: replace me
                 akashController.createWallet
-            ).get(
-                
             )
+            .get(akashController.getWallets)
 
         this.app.route('/akash/keys/:walletName')
-            .all(
-                akashMiddleware.validateWalletExists
-            )
-            .get(
-                // getWalled
-            )
+            .all(akashMiddleware.validateWalletExists)
+            .get(akashController.getWalletByName)
 
         return this.app;
     }
