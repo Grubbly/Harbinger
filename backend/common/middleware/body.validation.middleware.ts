@@ -15,7 +15,7 @@ class BodyValidationMiddleware {
         
         // If there are errors
         if (!errors.isEmpty()) {
-            return res.status(400).send({ errors: errors.array });
+            return res.status(400).send({ errors: errors.array() });
         }
 
         next();

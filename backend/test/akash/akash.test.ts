@@ -5,6 +5,7 @@ import { expect } from 'chai';
 import init from '../../app';
 import express from 'express';
 import * as http from 'http';
+import shortid from 'shortid';
 
 let app: express.Application;
 let server: http.Server;
@@ -76,6 +77,40 @@ describe('when accessing akash endpoints the API', function() {
         const andRes = await request.post('/akash').send(badCommand1);
         const semiColonRes = await request.post('/akash').send(badCommand2);
 
+        expect(andRes.status).to.equal(400);
+        expect(semiColonRes.status).to.equal(400);
+    })
+
+    it('should allow a POST to /akash/keys to create a wallet', async function() {
+        const createWalletBody = {
+            name: shortid.generate(),
+            flags: []
+        }
+
+        const res = await request.post('/akash/keys').send(createWalletBody);
+        expect(res.status).to.equal(201);
+        expect(res.body.name).to.equal(createWalletBody.name);
+    })
+
+    it('should disallow a POST to /akash/keys if invalid characters are in the name or flags', async function() {
+        const badCommand1 = {
+            name: shortid.generate() + ';',
+            flags: []
+        }
+        const badCommand2 = {
+            name: shortid.generate(),
+            flags: ['--help;']
+        }
+        const badCommand3 = {
+            name: shortid.generate(),
+            flags: ['--help &&']
+        }
+
+        const nameRes = await request.post('/akash/keys').send(badCommand1);
+        const semiColonRes = await request.post('/akash/keys').send(badCommand2);
+        const andRes = await request.post('/akash/keys').send(badCommand3);
+
+        expect(nameRes.status).to.equal(400);
         expect(andRes.status).to.equal(400);
         expect(semiColonRes.status).to.equal(400);
     })

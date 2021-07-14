@@ -26,10 +26,13 @@ export class AkashRoutes extends CommonRoutesConfig {
         // TODO: needs name check
         this.app.route('/akash/keys')
             .post(
+                // TODO: Change invalid character checks to these
                 body('name').isString().notEmpty()
-                    .withMessage("Name cannot be empty"),
-                body('flags').isArray(),
+                    .withMessage("Name cannot be empty or contain & or ;"),
+                body('flags').isArray()
+                    .withMessage("If no flags, make sure to include flags: [] in request body (ie set flags equal to empty array)."),
                 BodyValidationMiddleware.verifyBodyFieldsErrors,
+                akashMiddleware.validateNoInvalidCharactersInName,
                 akashMiddleware.validateNoInvalidCharactersInFlags,
                 akashController.addWallet
             )

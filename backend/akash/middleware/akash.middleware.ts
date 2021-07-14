@@ -64,6 +64,35 @@ class AkashMiddleware {
             });
         }
     }
+
+    async validateNoInvalidCharactersInName(
+        req: express.Request,
+        res: express.Response,
+        next: express.NextFunction
+    ) {
+        const invalidCharacters: Array<string> = [
+            '&',';'
+        ];
+
+        // Innocent before proven guilty :P
+        let reqNameContainsValidCharacters: boolean = true;
+
+        // Check if the name contains invalid characters
+        invalidCharacters.forEach((character: string) => {
+            if(req.body.name.includes(character)) {
+                reqNameContainsValidCharacters = false;
+                return;
+            }
+        });
+
+        if(reqNameContainsValidCharacters) {
+            next();
+        } else {
+            res.status(400).send({
+                error: `Invalid character found in name, names cannot contain: ${invalidCharacters}`
+            });
+        }
+    }
 }
 
 export default new AkashMiddleware();
