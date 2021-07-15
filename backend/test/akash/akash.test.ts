@@ -9,6 +9,7 @@ import shortid from 'shortid';
 
 let app: express.Application;
 let server: http.Server;
+let createdWalletName: string;
 
 describe('when accessing akash endpoints the API', function() {
     // Emulate a client request using supertest
@@ -41,7 +42,7 @@ describe('when accessing akash endpoints the API', function() {
         expect(res.status).to.equal(201);
         expect(res.body.stdout).to.be.a('string');
         expect(res.body.stderr).to.be.empty;
-    })
+    });
 
     it('POST to /akash should not crash if an error occurs in exec', async function() {
         // Expands to 'akash akash --help' at execution, which should error out
@@ -53,7 +54,7 @@ describe('when accessing akash endpoints the API', function() {
         expect(res.status).to.equal(400);
         expect(res.body.stdout).to.be.empty;
         expect(res.body.stderr).to.be.a('string');
-    })
+    });
 
     it('should disallow a POST to /akash if body is malformed', async function() {
         const malformedBody = {
@@ -62,7 +63,7 @@ describe('when accessing akash endpoints the API', function() {
         const res = await request.post('/akash').send(malformedBody);
 
         expect(res.status).to.equal(400);
-    })
+    });
 
     it('should disallow a POST to /akash if invalid characters are in the command', async function() {
         // Unix command stringing
@@ -79,18 +80,19 @@ describe('when accessing akash endpoints the API', function() {
 
         expect(andRes.status).to.equal(400);
         expect(semiColonRes.status).to.equal(400);
-    })
+    });
 
     it('should allow a POST to /akash/keys to create a wallet', async function() {
+        createdWalletName = shortid.generate();
         const createWalletBody = {
-            name: shortid.generate(),
+            name: createdWalletName,
             flags: []
         }
 
         const res = await request.post('/akash/keys').send(createWalletBody);
         expect(res.status).to.equal(201);
         expect(res.body.name).to.equal(createWalletBody.name);
-    })
+    });
 
     it('should disallow a POST to /akash/keys if invalid characters are in the name or flags', async function() {
         const badCommand1 = {
@@ -113,5 +115,22 @@ describe('when accessing akash endpoints the API', function() {
         expect(nameRes.status).to.equal(400);
         expect(andRes.status).to.equal(400);
         expect(semiColonRes.status).to.equal(400);
+    });
+
+    it('should allow a GET to /akash/keys to retrieve all wallets stored on device', async function() {
+        const res = await request.get('/akash/keys').send();
+
+        expect(res.status).to.equal(200);
+        expect(res.body).to.be.an('array');
+    })
+
+    it(`should allow a GET to /akash/keys/${createdWalletName} to retrieve wallet info`, async function() {
+        const res = await request.get(`/akash/keys/${createdWalletName}`).send();
+
+        expect(res.status).to.equal(200);
+        expect(res.body.name).to.equal(createdWalletName);
+        expect(res.body).to.have.own.property('type');
+        expect(res.body).to.have.own.property('pubkey');
+        expect(res.body).to.have.own.property('address');
     })
 })

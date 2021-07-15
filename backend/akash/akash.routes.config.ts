@@ -6,7 +6,6 @@ import express from 'express';
 import BodyValidationMiddleware from "../common/middleware/body.validation.middleware";
 import { body } from "express-validator";
 import akashMiddleware from "./middleware/akash.middleware";
-import akashService from "./services/akash.service";
 
 export class AkashRoutes extends CommonRoutesConfig {
     constructor(app: express.Application) {
