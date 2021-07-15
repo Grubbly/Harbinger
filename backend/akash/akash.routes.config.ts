@@ -43,6 +43,7 @@ export class AkashRoutes extends CommonRoutesConfig {
         this.app.route('/akash/keys/:walletName')
             .all(akashMiddleware.validateWalletExists)
             .get(akashController.getWalletByName)
+            .delete(akashController.deleteWalletByName)
 
         return this.app;
     }

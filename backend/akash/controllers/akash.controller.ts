@@ -47,6 +47,11 @@ class AkashController {
         const jsonifiedWallet = JSON.parse(results.stdout);
         res.status(200).send(jsonifiedWallet);
     }
+
+    async deleteWalletByName(req: express.Request, res: express.Response) {
+        const results = await akashService.deleteWalletByName(req.body.walletName);
+        res.status(204).send();
+    }
 }
 
 export default new AkashController();

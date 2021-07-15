@@ -28,6 +28,10 @@ class AkashService {
     async getWalletByName(walletName: string) {
         return akashDao.getWalletByName(walletName);
     }
+
+    async deleteWalletByName(walletName: string) {
+        return akashDao.deleteWalletByName(walletName);
+    }
 }
 
 export default new AkashService();

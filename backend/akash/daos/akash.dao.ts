@@ -39,7 +39,12 @@ class AkashDao {
     }
 
     async getWalletByName(walletName: string) {
-        const command = `akash keys show ${walletName} --output json`
+        const command = `akash keys show ${walletName} --output json`;
+        return await ExecPromiseService.exec(command);
+    }
+
+    async deleteWalletByName(walletName: string) {
+        const command = `akash keys delete ${walletName} --yes --output json`;
         return await ExecPromiseService.exec(command);
     }
 }
