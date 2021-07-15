@@ -1,5 +1,5 @@
 export interface PostKeysAddDto {
     // Key name
-    name: string;
+    walletName: string;
     flags: Array<String>;
 }

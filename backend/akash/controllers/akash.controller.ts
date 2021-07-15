@@ -29,7 +29,7 @@ class AkashController {
         }
         else {
             // Command was good, send output
-            log(`New wallet created: ${req.body.name}`);
+            log(`New wallet created: ${req.body.walletName}`);
             const jsonifiedStdout = JSON.parse(results.stdout);
             res.status(201).send(jsonifiedStdout);
         }

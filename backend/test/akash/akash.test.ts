@@ -9,7 +9,6 @@ import shortid from 'shortid';
 
 let app: express.Application;
 let server: http.Server;
-let createdWalletName: string;
 
 describe('when accessing akash endpoints the API', function() {
     // Emulate a client request using supertest
@@ -83,28 +82,40 @@ describe('when accessing akash endpoints the API', function() {
     });
 
     it('should allow a POST to /akash/keys to create a wallet', async function() {
-        createdWalletName = shortid.generate();
         const createWalletBody = {
-            name: createdWalletName,
+            walletName: shortid.generate(),
             flags: []
         }
 
         const res = await request.post('/akash/keys').send(createWalletBody);
         expect(res.status).to.equal(201);
-        expect(res.body.name).to.equal(createWalletBody.name);
+        expect(res.body.name).to.equal(createWalletBody.walletName);
     });
 
-    it('should disallow a POST to /akash/keys if invalid characters are in the name or flags', async function() {
+    it('should disallow a POST to /akash/keys if the walletName already exits', async function() {
+        const walletName = shortid.generate();
+        const createWalletWithSameNameBody = {
+            walletName: walletName,
+            flags: []
+        }
+
+        await request.post('/akash/keys').send(createWalletWithSameNameBody);
+        const resDuplicate = await request.post('/akash/keys').send(createWalletWithSameNameBody);
+        
+        expect(resDuplicate.status).to.equal(400);
+    });
+
+    it('should disallow a POST to /akash/keys if invalid characters are in the walletName or flags', async function() {
         const badCommand1 = {
-            name: shortid.generate() + ';',
+            walletName: shortid.generate() + ';',
             flags: []
         }
         const badCommand2 = {
-            name: shortid.generate(),
+            walletName: shortid.generate(),
             flags: ['--help;']
         }
         const badCommand3 = {
-            name: shortid.generate(),
+            walletName: shortid.generate(),
             flags: ['--help &&']
         }
 
@@ -122,15 +133,22 @@ describe('when accessing akash endpoints the API', function() {
 
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('array');
-    })
+    });
 
-    it(`should allow a GET to /akash/keys/${createdWalletName} to retrieve wallet info`, async function() {
-        const res = await request.get(`/akash/keys/${createdWalletName}`).send();
+    it(`should allow a GET to /akash/keys/:walletName to retrieve wallet info`, async function() {
+        const walletName = shortid.generate();
+        const createWalletBody = {
+            walletName: walletName,
+            flags: []
+        }
+
+        await request.post('/akash/keys').send(createWalletBody);
+        const res = await request.get(`/akash/keys/${walletName}`).send();
 
         expect(res.status).to.equal(200);
-        expect(res.body.name).to.equal(createdWalletName);
+        expect(res.body.name).to.equal(walletName);
         expect(res.body).to.have.own.property('type');
         expect(res.body).to.have.own.property('pubkey');
         expect(res.body).to.have.own.property('address');
-    })
-})
+    });
+});

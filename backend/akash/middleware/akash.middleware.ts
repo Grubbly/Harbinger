@@ -89,7 +89,7 @@ class AkashMiddleware {
 
         // Check if the name contains invalid characters
         invalidCharacters.forEach((character: string) => {
-            if(req.body.name.includes(character)) {
+            if(req.body.walletName.includes(character)) {
                 reqNameContainsValidCharacters = false;
                 return;
             }
@@ -117,6 +117,23 @@ class AkashMiddleware {
             res.status(404).send({
                 error: `Could not find wallet named ${req.body.walletName} on this device`
             });
+        }
+    }
+
+    async validateSameWalletDoesntExist(
+        req: express.Request,
+        res: express.Response,
+        next: express.NextFunction   
+    ) {
+        const results = await ExecPromiseService.exec(`akash keys show ${req.body.walletName}`);
+
+        // If we get an error from the wallet not existing, continue to create the wallet
+        if(results.stderr) {
+            next();
+        } else {
+            res.status(400).send({
+                error: 'Wallet with that name already exists on this device.'
+            })
         }
     }
 }

@@ -28,13 +28,14 @@ export class AkashRoutes extends CommonRoutesConfig {
         this.app.route('/akash/keys')
             .post(
                 // TODO: Change invalid character checks to inline here
-                body('name').isString().notEmpty()
+                body('walletName').isString().notEmpty()
                     .withMessage("Name cannot be empty or contain & or ;"),
                 body('flags').isArray()
                     .withMessage("If no flags, make sure to include flags: [] in request body (ie set flags equal to empty array)."),
                 BodyValidationMiddleware.verifyBodyFieldsErrors,
                 akashMiddleware.validateNoInvalidCharactersInName, // TODO: replace me
                 akashMiddleware.validateNoInvalidCharactersInFlags, // TODO: replace me
+                akashMiddleware.validateSameWalletDoesntExist,
                 akashController.createWallet
             )
             .get(akashController.getWallets)

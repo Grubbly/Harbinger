@@ -19,7 +19,7 @@ class AkashDao {
 
     async createWallet(commandFields: PostKeysAddDto) {
         // Formulate base command with required fields
-        let command = `akash keys add ${commandFields.name}`;
+        let command = `akash keys add ${commandFields.walletName}`;
         
         // Apply flags
         commandFields.flags.map((flag) => {
