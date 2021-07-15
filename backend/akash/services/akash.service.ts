@@ -32,6 +32,10 @@ class AkashService {
     async deleteWalletByName(walletName: string) {
         return akashDao.deleteWalletByName(walletName);
     }
+
+    async importWalletByMnemonic(walletName: string, mnemonic: string) {
+        return akashDao.importWalletByMnemonic(walletName, mnemonic);
+    }
 }
 
 export default new AkashService();

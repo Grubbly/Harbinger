@@ -136,6 +136,30 @@ class AkashMiddleware {
             })
         }
     }
+
+    async validatePublicKeyDoesntExist(
+        req: express.Request,
+        res: express.Response,
+        next: express.NextFunction
+    ) { 
+        const pubKeyRequest = await ExecPromiseService.execWithStdin(
+            `akash keys add ${req.body.walletName} --recover --dry-run --output json`,
+            req.body.mnemonic
+        );
+        const pubKey = JSON.parse(pubKeyRequest.stdout).address;
+        log("JSON", pubKey);
+        const duplicatePubKeyRequest = await ExecPromiseService.exec(
+            `akash keys show ${pubKey}`
+        );
+
+        if(duplicatePubKeyRequest.stderr) {
+            next();
+        } else {
+            res.status(400).send({
+                error: 'Public key already exists on this device'
+            });
+        }
+    }
 }
 
 export default new AkashMiddleware();

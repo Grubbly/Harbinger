@@ -52,6 +52,12 @@ class AkashController {
         await akashService.deleteWalletByName(req.body.walletName);
         res.status(204).send();
     }
+
+    async importWalletByMnemonic(req: express.Request, res: express.Response) {
+        const results = await akashService.importWalletByMnemonic(req.body.walletName, req.body.mnemonic);
+        const jsonifiedWalletImportDetails = JSON.parse(results.stdout);
+        res.status(201).send(jsonifiedWalletImportDetails);
+    }
 }
 
 export default new AkashController();

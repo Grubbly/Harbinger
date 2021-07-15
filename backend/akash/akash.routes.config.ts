@@ -45,6 +45,19 @@ export class AkashRoutes extends CommonRoutesConfig {
             .get(akashController.getWalletByName)
             .delete(akashController.deleteWalletByName)
 
+        this.app.route('/akash/import')
+            .post(
+                body('walletName').isString().notEmpty()
+                    .withMessage('Name cannot be empty or contain & or ;'),
+                body('mnemonic').isString().notEmpty()
+                    .withMessage('Mnemonic is required to import wallet'),
+                BodyValidationMiddleware.verifyBodyFieldsErrors,
+                akashMiddleware.validatePublicKeyDoesntExist,
+                akashMiddleware.validateNoInvalidCharactersInName,
+                akashMiddleware.validateSameWalletDoesntExist,
+                akashController.importWalletByMnemonic
+            )
+
         return this.app;
     }
 }

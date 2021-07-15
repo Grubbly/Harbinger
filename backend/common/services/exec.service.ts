@@ -20,6 +20,23 @@ class ExecPromiseService {
             return error;
         }
     }
+
+    async execWithStdin(command: string, stdin: string) {
+        try {
+            const promise = ExecPromise.exec(command);
+            const child = promise.child;
+            
+            child.stdin.setEncoding('utf-8');
+            child.stdin.write(stdin+'\n');
+            child.stdin.end();
+
+            return await promise;
+        } 
+        catch(error) {
+            log(`Executing command resulted in error: ${error}`);
+            return error;
+        }   
+    }
 }
 
 export default new ExecPromiseService();

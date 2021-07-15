@@ -35,7 +35,7 @@ describe('when accessing akash endpoints the API', function() {
         // so only arguments and flag are necessary in the command
         const commandBody = {
             command: '--help'
-        }
+        };
         const res = await request.post('/akash').send(commandBody);
 
         expect(res.status).to.equal(201);
@@ -47,7 +47,7 @@ describe('when accessing akash endpoints the API', function() {
         // Expands to 'akash akash --help' at execution, which should error out
         const commandBody = {
             command: 'akash --help'
-        }
+        };
         const res = await request.post('/akash').send(commandBody);
 
         expect(res.status).to.equal(400);
@@ -58,7 +58,7 @@ describe('when accessing akash endpoints the API', function() {
     it('should disallow a POST to /akash if body is malformed', async function() {
         const malformedBody = {
             malformed: 'ew gross'
-        }
+        };
         const res = await request.post('/akash').send(malformedBody);
 
         expect(res.status).to.equal(400);
@@ -68,11 +68,11 @@ describe('when accessing akash endpoints the API', function() {
         // Unix command stringing
         const badCommand1 = {
             command: '--help ;'
-        }
+        };
         // Windows command stringing
         const badCommand2 = {
             command: '--help &&'
-        }
+        };
 
         const andRes = await request.post('/akash').send(badCommand1);
         const semiColonRes = await request.post('/akash').send(badCommand2);
@@ -85,7 +85,7 @@ describe('when accessing akash endpoints the API', function() {
         const createWalletBody = {
             walletName: shortid.generate(),
             flags: []
-        }
+        };
 
         const res = await request.post('/akash/keys').send(createWalletBody);
         expect(res.status).to.equal(201);
@@ -97,7 +97,7 @@ describe('when accessing akash endpoints the API', function() {
         const createWalletWithSameNameBody = {
             walletName: walletName,
             flags: []
-        }
+        };
 
         await request.post('/akash/keys').send(createWalletWithSameNameBody);
         const resDuplicate = await request.post('/akash/keys').send(createWalletWithSameNameBody);
@@ -109,15 +109,15 @@ describe('when accessing akash endpoints the API', function() {
         const badCommand1 = {
             walletName: shortid.generate() + ';',
             flags: []
-        }
+        };
         const badCommand2 = {
             walletName: shortid.generate(),
             flags: ['--help;']
-        }
+        };
         const badCommand3 = {
             walletName: shortid.generate(),
             flags: ['--help &&']
-        }
+        };
 
         const nameRes = await request.post('/akash/keys').send(badCommand1);
         const semiColonRes = await request.post('/akash/keys').send(badCommand2);
@@ -140,7 +140,7 @@ describe('when accessing akash endpoints the API', function() {
         const createWalletBody = {
             walletName: walletName,
             flags: []
-        }
+        };
 
         await request.post('/akash/keys').send(createWalletBody);
         const res = await request.get(`/akash/keys/${walletName}`).send();
@@ -157,7 +157,7 @@ describe('when accessing akash endpoints the API', function() {
         const createWalletBody = {
             walletName: walletName,
             flags: []
-        }
+        };
 
         await request.post('/akash/keys').send(createWalletBody);
         const res = await request.delete(`/akash/keys/${walletName}`).send();
@@ -170,5 +170,46 @@ describe('when accessing akash endpoints the API', function() {
         const res = await request.delete(`/akash/keys/${walletName}`).send();
 
         expect(res.status).to.equal(404);
+    });
+
+    it('should allow a POST to /akash/import if walletName does not exist', async function() {
+        // Create a new wallet and get the mnemonic
+        const walletName = shortid.generate();
+        const createWalletBody = {
+            walletName: walletName,
+            flags: []
+        };
+
+        const createRes = await request.post('/akash/keys').send(createWalletBody);
+        const mnemonic = createRes.body.mnemonic;
+
+        // Delete the wallet
+        await request.delete(`/akash/keys/${walletName}`);
+
+        // Import the wallet using the mnemonic
+        const importWalletBody = {
+            walletName: walletName,
+            mnemonic: mnemonic
+        };
+        const res = await request.post(`/akash/import`).send(importWalletBody);
+        
+        expect(res.status).to.equal(201);
+        expect(res.body.name).to.equal(walletName);
+    });
+
+    // TODO: needs a more rigorous test
+    it('should disallow a POST to /akash/import if walletName already exists', async function() {
+        const walletName = shortid.generate();
+
+        // RIP secret key
+        const importWalletBody = {
+            walletName: walletName,
+            mnemonic: "tide swing milk crazy body pizza memory silly auto eye giant cousin icon seek wool meadow bright forward exercise raw there horror ozone author"
+        };
+
+        await request.post(`/akash/import`).send(importWalletBody);
+        const res = await request.post(`/akash/import`).send(importWalletBody);
+
+        expect(res.status).to.equal(400);
     });
 });

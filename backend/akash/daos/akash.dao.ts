@@ -47,6 +47,11 @@ class AkashDao {
         const command = `akash keys delete ${walletName} --yes --output json`;
         return await ExecPromiseService.exec(command);
     }
+
+    async importWalletByMnemonic(walletName: string, mnemonic: string) {
+        const command = `akash keys add ${walletName} --recover --output json`;
+        return await ExecPromiseService.execWithStdin(command, mnemonic);
+    }
 }
 
 export default new AkashDao();
