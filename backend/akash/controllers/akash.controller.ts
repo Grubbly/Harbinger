@@ -37,7 +37,7 @@ class AkashController {
 
     async getWallets(req: express.Request, res: express.Response) {
         const results = await akashService.getWallets();
-        log(`got ${results}`)
+        log(`Got ${results}`);
         const jsonifiedWallets = JSON.parse(results.stdout);
         res.status(200).send(jsonifiedWallets);
     }
@@ -49,7 +49,7 @@ class AkashController {
     }
 
     async deleteWalletByName(req: express.Request, res: express.Response) {
-        const results = await akashService.deleteWalletByName(req.body.walletName);
+        await akashService.deleteWalletByName(req.body.walletName);
         res.status(204).send();
     }
 }

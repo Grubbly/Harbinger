@@ -151,4 +151,24 @@ describe('when accessing akash endpoints the API', function() {
         expect(res.body).to.have.own.property('pubkey');
         expect(res.body).to.have.own.property('address');
     });
+
+    it('should allow a DELETE to /akash/keys/:walletName if walletName exits', async function() {
+        const walletName = shortid.generate();
+        const createWalletBody = {
+            walletName: walletName,
+            flags: []
+        }
+
+        await request.post('/akash/keys').send(createWalletBody);
+        const res = await request.delete(`/akash/keys/${walletName}`).send();
+
+        expect(res.status).to.equal(204);
+    });
+
+    it('should disallow a DELETE to /akash/keys/:walletName if walletName does not exist', async function() {
+        const walletName = shortid.generate();
+        const res = await request.delete(`/akash/keys/${walletName}`).send();
+
+        expect(res.status).to.equal(404);
+    });
 });
