@@ -6,7 +6,6 @@
 
 <script>
   import WalletCardGrid from './WalletCardGrid.vue';
-
   export default {
     name: 'Landing',
     components: {

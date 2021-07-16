@@ -1,7 +1,7 @@
 <template>
   <v-row>
       <v-col cols='3' v-for="wallet in wallets" :key="wallet.address">
-          <WalletCard :name="wallet.name" :address="wallet.address" />
+          <WalletCard @onDeleteClicked="onWalletCardDelete" :name="wallet.name" :address="wallet.address" />
       </v-col>
   </v-row>
 </template>
@@ -26,6 +26,12 @@ export default {
         axios.get(`http://localhost:${this.$store.state.backendPort}/akash/keys`).then((res) => {
             this.wallets = res.data;
         });
+    },
+
+    methods: {
+        onWalletCardDelete(address) {
+            console.log(address);
+        }
     }
 }
 </script>
