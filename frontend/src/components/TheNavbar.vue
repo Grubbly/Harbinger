@@ -14,7 +14,7 @@ export default {
     methods: {
         goHome() {
             // Not to be confused with this.$route
-            this.$router.push({ name: 'Landing' })
+            this.$router.push({ name: 'TheLanding' });
         },
     }
 }

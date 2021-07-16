@@ -10,7 +10,7 @@
 import WalletCard from './WalletCard.vue'
 
 export default {
-    name: 'WalletCardGrid',
+    name: 'TheWalletCardGrid',
 
     components: {
         WalletCard
