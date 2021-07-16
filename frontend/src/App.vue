@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app v-if="!isFetching">
     <v-app-bar
       app
       color="primary"
@@ -15,10 +15,29 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: 'App',
 
-  components: {
+  data() {
+    return {
+      isFetching: true
+    }
+  },
+
+  computed: {
+    backendUrl() {
+      return this.$store.getters.backendUrl;
+    },
+  },
+
+  mounted() {
+    // Get all the wallets on this device
+    axios.get(this.backendUrl + '/akash/keys').then((res) => {
+        this.$store.state.wallets = res.data;
+        this.isFetching = false;
+    });
   },
 };
 </script>

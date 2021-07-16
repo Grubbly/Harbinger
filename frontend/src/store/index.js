@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import VueRouter from 'vue-router';
 
 Vue.use(Vuex);
 
@@ -12,6 +11,9 @@ export default new Vuex.Store({
   getters: {
     backendUrl: state => {
       return `http://localhost:${state.backendPort}`
+    },
+    getWalletByName: (state) => (walletName) => {
+      return state.wallets.find(wallet => wallet.name === walletName)
     }
   },
   mutations: {

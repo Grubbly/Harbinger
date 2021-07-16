@@ -7,7 +7,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 import WalletCard from './WalletCard.vue'
 
 export default {
@@ -17,17 +16,7 @@ export default {
         WalletCard
     },
 
-    mounted() {
-        // Get all the wallets on this device
-        axios.get(this.backendUrl + '/akash/keys').then((res) => {
-            this.$store.state.wallets = res.data;
-        });
-    },
-
     computed: {
-        backendUrl() {
-            return this.$store.getters.backendUrl;
-        },
         wallets() {
             return this.$store.state.wallets
         }
