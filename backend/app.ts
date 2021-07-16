@@ -35,7 +35,7 @@ const init = sqliteService.connectWithRetry()
     // Parse all incoming requests as json
     app.use(express.json());
 
-    // Allow cross-origin requests
+    // Allow cross-origin requests from localhost
     app.use(cors());
 
     // Configure expressWinston to log all HTTP requests

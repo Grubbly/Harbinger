@@ -38,24 +38,20 @@
     </v-app-bar>
 
     <v-main>
-      <HelloWorld/>
+      <Landing/>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import Landing from './components/Landing.vue';
 
 export default {
   name: 'App',
 
   components: {
-    HelloWorld,
+    Landing,
   },
-
-  data: () => ({
-    //
-  }),
 };
 </script>
 
