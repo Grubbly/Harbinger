@@ -7,6 +7,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     backendPort: 3000,
+    wallets: [],
   },
   getters: {
     backendUrl: state => {
