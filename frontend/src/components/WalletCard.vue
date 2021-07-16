@@ -13,16 +13,31 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     name: 'WalletCard',
+    
     props: {
         name: String,
         address: String
     },
-    methods: {
-        onDeleteClicked() {
-            this.$emit('onDeleteClicked', this.address);
+
+    computed: {
+        backendUrl() {
+            return this.$store.getters.backendUrl;
         }
-    }
+    },
+
+    methods: {
+        // When a delete occurs, this WalletCard will send an async DELETE request to
+        // /akash/keys/:walletName. When a response is received, it will $emit an event
+        // to WalletCardGrid to remove its entry from the local array of all wallets.
+        onDeleteClicked() {
+            axios.delete(this.backendUrl + '/akash/keys/' + this.name).then(() => {
+                this.$emit('onDeleteClicked', this.address);
+            })
+        }
+    },
 }
 </script>

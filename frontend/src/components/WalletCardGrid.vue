@@ -23,14 +23,23 @@ export default {
 
     mounted() {
         // Get all the wallets on this device
-        axios.get(`http://localhost:${this.$store.state.backendPort}/akash/keys`).then((res) => {
+        axios.get(this.backendUrl + '/akash/keys').then((res) => {
             this.wallets = res.data;
         });
     },
 
+    computed: {
+        backendUrl() {
+            return this.$store.getters.backendUrl;
+        }
+    },
+
     methods: {
+        // Once the wallet has been deleted from the backend, the corresponding
+        // WalletCard will $emit an event handled by this function which removes
+        // it visually from the frontend.
         onWalletCardDelete(address) {
-            console.log(address);
+            this.wallets = this.wallets.filter(wallet => wallet.address !== address);
         }
     }
 }
