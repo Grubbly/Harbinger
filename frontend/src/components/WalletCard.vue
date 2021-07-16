@@ -4,18 +4,20 @@
     <v-card-text>{{ this.address }}</v-card-text>
     
     <v-fab-transition>
-        <v-btn
-            v-show="selectShow"
-            color="primary"
-            fab
-            dark
-            small
-            absolute
-            left
-            bottom
-        >
-            <v-icon>mdi-arrow-right-bold</v-icon>
-        </v-btn>
+        <router-link :to="{ name: 'WalletProfile', params: {walletName: this.name}}">
+            <v-btn
+                v-show="selectShow"
+                color="primary"
+                fab
+                dark
+                small
+                absolute
+                left
+                bottom
+            >
+                <v-icon>mdi-arrow-right-bold</v-icon>
+            </v-btn>
+        </router-link>
     </v-fab-transition>
 
     <v-card-actions class="info">
