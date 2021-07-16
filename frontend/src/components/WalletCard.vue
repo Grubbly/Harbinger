@@ -1,8 +1,23 @@
 <template>
-  <v-card>
+  <v-card @mouseenter="selectShow = true" @mouseleave="selectShow = false">
     <v-card-title>{{ this.name }}</v-card-title>
     <v-card-text>{{ this.address }}</v-card-text>
     
+    <v-fab-transition>
+        <v-btn
+            v-show="selectShow"
+            color="primary"
+            fab
+            dark
+            small
+            absolute
+            left
+            bottom
+        >
+            <v-icon>mdi-arrow-right-bold</v-icon>
+        </v-btn>
+    </v-fab-transition>
+
     <v-card-actions class="info">
         <v-spacer></v-spacer>
         <v-btn @click="onDeleteClicked" small icon>
@@ -18,9 +33,15 @@ import axios from 'axios';
 export default {
     name: 'WalletCard',
     
+    data() {
+        return {
+            selectShow: false,
+        }
+    },
+
     props: {
         name: String,
-        address: String
+        address: String,
     },
 
     computed: {
@@ -37,6 +58,9 @@ export default {
             axios.delete(this.backendUrl + '/akash/keys/' + this.name).then(() => {
                 this.$emit('onDeleteClicked', this.address);
             })
+        },
+        test() {
+            console.log("hi");
         }
     },
 }
