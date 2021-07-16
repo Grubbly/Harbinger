@@ -6,11 +6,10 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col v-for="wallet in wallets" :key="wallet.address">
+      <v-col cols='3' v-for="wallet in wallets" :key="wallet.address">
         <v-card>
-          <v-card-text>
-            {{wallet.address}}
-          </v-card-text>
+          <v-card-title> {{wallet.name}} </v-card-title>
+          <v-card-text> {{wallet.address}} </v-card-text>
         </v-card>
       </v-col>
     </v-row>
