@@ -1,6 +1,6 @@
 <template>
-  <v-container>
-    <WalletCardGrid class='mt-5' />
+  <v-container class="d-flex justify-center align-center" style="height: 90vh;">
+    <WalletCardGrid class='mt-5' style="max-width: 50%;"/>
   </v-container>
 </template>
 

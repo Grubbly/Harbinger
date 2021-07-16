@@ -1,6 +1,6 @@
 <template>
-  <v-row>
-      <v-col cols='3' v-for="wallet in wallets" :key="wallet.address">
+  <v-row class="d-flex justify-center">
+      <v-col cols='6' v-for="wallet in wallets" :key="wallet.address">
           <WalletCard @onDeleteClicked="onWalletCardDelete" :name="wallet.name" :address="wallet.address" />
       </v-col>
   </v-row>
