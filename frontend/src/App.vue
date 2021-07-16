@@ -1,13 +1,6 @@
 <template>
   <v-app v-if="!isFetching">
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-      <h1>Wow look at this cool app title</h1>
-    </v-app-bar>
-
+    <TheNavbar />
     <v-main>
       <router-view/>
     </v-main>
@@ -15,15 +8,20 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from 'axios';
+import TheNavbar from './components/TheNavbar';
 
 export default {
   name: 'App',
-
+  
   data() {
     return {
       isFetching: true
     }
+  },
+
+  components: {
+    TheNavbar
   },
 
   computed: {
