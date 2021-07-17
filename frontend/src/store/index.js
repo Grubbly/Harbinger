@@ -9,7 +9,10 @@ export default new Vuex.Store({
     wallets: [],
     AKASH_KEY_NAME: '',
     AKASH_KEYRING_BACKEND: 'os',
-    AKASH_NET: "https://raw.githubusercontent.com/ovrclk/net/master/mainnet"
+    AKASH_NET: "https://raw.githubusercontent.com/ovrclk/net/master/mainnet",
+    AKASH_VERSION: '',
+    AKASH_CHAIN_ID: '',
+    
   },
   getters: {
     backendUrl: state => {

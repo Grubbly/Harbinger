@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 
 export default {
     name: 'WalletProfile',
@@ -25,11 +26,42 @@ export default {
     },
     mounted() {
         this.wallet = this.getWalletByName(this.walletName);
+
+        // Deployment Setup
+
+        // AKASH_KEY_NAME=walletName
+        this.$store.state.AKASH_KEY_NAME = this.walletName;
+        console.log('Wallet Name', this.$store.state.AKASH_KEY_NAME);
+
+        // AKASH_VERSION="$(curl -s "$AKASH_NET/version.txt")"
+        axios.get(this.$store.state.AKASH_NET + '/version.txt')
+            .then((res) => {
+                this.$store.state.AKASH_VERSION = res.data;
+                console.log('VERSION', this.$store.state.AKASH_VERSION);
+            });
+
+        // AKASH_CHAIN_ID="$(curl -s "$AKASH_NET/chain-id.txt")"
+        axios.get(this.$store.state.AKASH_NET + '/chain-id.txt')
+            .then((res) => {
+                this.$store.state.AKASH_CHAIN_ID = res.data;
+                console.log('CHAIN ID', this.$store.state.AKASH_CHAIN_ID);
+            });
+
+        // AKASH_NODE="$(curl -s "$AKASH_NET/rpc-nodes.txt" | shuf -n 1)"
+        axios.get(this.$store.state.AKASH_NET + '/rpc-nodes.txt')
+            .then((res) => {
+                const nodes = res.data.split('\n');
+                const randomNode = nodes[Math.floor(Math.random()*nodes.length)];
+                this.$store.state.AKASH_NODE = randomNode;
+                console.log('NODE', this.$store.state.AKASH_NODE);
+            })
+
+        
     },
     computed: {
         walletName() {
             return this.$route.params.walletName
-        }
+        },
     },
     methods: {
         getWalletByName(walletName) {
