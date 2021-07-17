@@ -12,7 +12,7 @@ export default new Vuex.Store({
     AKASH_NET: "https://raw.githubusercontent.com/ovrclk/net/master/mainnet",
     AKASH_VERSION: '',
     AKASH_CHAIN_ID: '',
-    
+    AKASH_NODE: ''
   },
   getters: {
     backendUrl: state => {
