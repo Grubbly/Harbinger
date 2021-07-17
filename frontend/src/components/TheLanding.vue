@@ -1,6 +1,9 @@
 <template>
-  <v-container class="d-flex justify-center align-center" style="width: 70vw; height: 90vh;">
+  <v-container class="custom-container-size d-flex justify-center align-center mt-5">
     <v-row>
+      <v-col cols='12'>
+        <CreateWalletBtn />
+      </v-col>
       <v-col cols='12'>
         <ImportWalletFromMnemonicBtn />
       </v-col>
@@ -14,12 +17,14 @@
 <script>
   import TheWalletCardGrid from './TheWalletCardGrid';
   import ImportWalletFromMnemonicBtn from './ImportWalletFromMnemonicBtn';
+  import CreateWalletBtn from './CreateWalletBtn.vue';
 
   export default {
     name: 'TheLanding',
     components: {
       TheWalletCardGrid,
-      ImportWalletFromMnemonicBtn
-    }
+      ImportWalletFromMnemonicBtn,
+      CreateWalletBtn
+    },
   }
 </script>

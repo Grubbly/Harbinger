@@ -5,3 +5,8 @@
 .fill-height {
     height: 100%;
 }
+
+.custom-container-size {
+    width: 70vw; 
+    height: 90vh;
+}

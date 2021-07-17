@@ -3,11 +3,11 @@
     <v-card-title>{{ this.name }}</v-card-title>
     <v-card-text>{{ this.address }}</v-card-text>
     
-    <v-fab-transition>
-        <router-link :to="{ name: 'WalletProfile', params: {walletName: this.name}}">
+    <router-link :to="{ name: 'WalletProfile', params: {walletName: this.name}}">
+        <v-fab-transition>
             <v-btn
                 v-show="selectShow"
-                color="primary"
+                color="secondary"
                 fab
                 dark
                 small
@@ -17,8 +17,9 @@
             >
                 <v-icon>mdi-arrow-right-bold</v-icon>
             </v-btn>
-        </router-link>
-    </v-fab-transition>
+        </v-fab-transition>
+    </router-link>
+
 
     <v-card-actions class="info">
         <v-spacer></v-spacer>
@@ -55,7 +56,7 @@ export default {
     methods: {
         // When a delete occurs, this WalletCard will send an async DELETE request to
         // /akash/keys/:walletName. When a response is received, it will $emit an event
-        // to TheWalletCardGrid to remove its entry from the local array of all wallets.
+        // to WalletCardGrid to remove its entry from the local array of all wallets.
         onDeleteClicked() {
             axios.delete(this.backendUrl + '/akash/keys/' + this.name).then(() => {
                 this.$emit('onDeleteClicked', this.address);

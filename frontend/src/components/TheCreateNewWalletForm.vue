@@ -9,18 +9,8 @@
                 :rules='walletNameRules'
              ></v-text-field>
           </v-col>
-          <v-col cols='12'>
-            <v-textarea
-                v-model="mnemonicWords"
-                auto-grow
-                filled
-                color="primary"
-                label="Mnemonic (space delimited)"
-                rows="1"
-            ></v-textarea>
-          </v-col>
           <v-col cols='12' class="d-flex justify-center align-center">
-            <v-btn @click="submitMnemonic">Import</v-btn>
+            <v-btn @click="createNewWallet">Create</v-btn>
           </v-col>
       </v-row>
     </v-container>
@@ -30,11 +20,10 @@
 import axios from 'axios';
 
 export default {
-    name: 'TheImportWalletForm',
+    name: 'TheCreateNewWalletForm',
     data() {
         return {
             walletName: '',
-            mnemonicWords: '',
             walletNameRules: [ 
                 v => /^[\S;&\n]+$/.test(v)
             ]
@@ -48,13 +37,13 @@ export default {
     },
 
     methods: {
-        submitMnemonic() {
-            const importWalletBody = {
+        createNewWallet() {
+            const createWalletBody = {
                 walletName: this.walletName,
-                mnemonic: this.mnemonicWords
+                flags: []
             };
 
-            axios.post(this.backendUrl + '/akash/import', importWalletBody)
+            axios.post(this.backendUrl + '/akash/keys', createWalletBody)
                 .then(() => {
                     axios.get(this.backendUrl + '/akash/keys').then((res) => {
                         this.$store.state.wallets = res.data;

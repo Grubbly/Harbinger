@@ -5,6 +5,7 @@ Vue.use(Router);
 import TheLanding from '@/components/TheLanding';
 import WalletProfile from '@/components/WalletProfile';
 import TheImportWalletForm from '@/components/TheImportWalletForm';
+import TheCreateNewWalletForm from '@/components/TheCreateNewWalletForm';
 
 const routes = [
     {
@@ -21,6 +22,11 @@ const routes = [
         path: '/import',
         name: 'TheImportWalletForm',
         component: TheImportWalletForm
+    },
+    {
+        path: '/createWallet',
+        name: 'TheCreateNewWalletForm',
+        component: TheCreateNewWalletForm
     },
     {
         // 404 Redirect to TheLanding component

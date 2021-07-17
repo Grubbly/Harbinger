@@ -11,7 +11,6 @@
                 <v-card class="fill-height error">stuff</v-card>
             </v-col>
         </v-row>
-
     </v-container>
 </template>
 

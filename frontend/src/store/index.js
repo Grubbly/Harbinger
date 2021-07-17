@@ -7,6 +7,9 @@ export default new Vuex.Store({
   state: {
     backendPort: 3000,
     wallets: [],
+    AKASH_KEY_NAME: '',
+    AKASH_KEYRING_BACKEND: 'os',
+    AKASH_NET: "https://raw.githubusercontent.com/ovrclk/net/master/mainnet"
   },
   getters: {
     backendUrl: state => {
