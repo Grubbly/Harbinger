@@ -8,6 +8,7 @@ export default new Vuex.Store({
     backendPort: 3000,
     wallets: [],
     AKASH_KEY_NAME: '',
+    AKASH_ACCOUNT_ADDRESS: '',
     AKASH_KEYRING_BACKEND: 'os',
     AKASH_NET: "https://raw.githubusercontent.com/ovrclk/net/master/mainnet",
     AKASH_VERSION: '',

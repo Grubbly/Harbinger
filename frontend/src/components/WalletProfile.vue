@@ -10,7 +10,7 @@
             </v-col>
 
             <!-- Environment Variables -->
-            <v-col cols='4'>
+            <v-col cols='6'>
                 <v-card>
                     <v-list subheader two-line>
                         <v-list-item v-for="(item, key, index) in this.environmentVariables" :key="index">
@@ -45,6 +45,10 @@ export default {
         // AKASH_KEY_NAME=walletName
         this.$store.state.AKASH_KEY_NAME = this.walletName;
         console.log('Wallet Name', this.$store.state.AKASH_KEY_NAME);
+
+        // AKASH_ACCOUNT_ADDRESS="$(akash keys show $AKASH_KEY_NAME -a)"
+        this.$store.state.AKASH_ACCOUNT_ADDRESS = this.wallet.address;
+        console.log('Wallet Address', this.$store.state.AKASH_ACCOUNT_ADDRESS);
 
         Promise.all([
             // AKASH_VERSION="$(curl -s "$AKASH_NET/version.txt")"
@@ -84,7 +88,6 @@ export default {
         },
         environmentVariables() {
             return {
-                AKASH_KEY_NAME: this.$store.state.AKASH_KEY_NAME,
                 AKASH_NET: this.$store.state.AKASH_NET,
                 AKASH_VERSION: this.$store.state.AKASH_VERSION,
                 AKASH_CHAIN_ID: this.$store.state.AKASH_CHAIN_ID,
