@@ -5,6 +5,7 @@
             <v-col cols='12'>
                 <v-card class="fill-height" elevation='2'>
                     <v-card-title>{{this.walletName}}</v-card-title>
+                    <v-card-text>{{this.balance}} AKT</v-card-text>
                     <v-card-text>{{this.wallet.address}}</v-card-text>
                 </v-card>
             </v-col>
@@ -35,11 +36,11 @@ export default {
         return {
             isFetching: true,
             wallet: Object,
+            balance: 0
         }
     },
     mounted() {
         this.wallet = this.getWalletByName(this.walletName);
-
         // Deployment Setup
 
         // AKASH_KEY_NAME=walletName
@@ -67,22 +68,25 @@ export default {
 
             // AKASH_NODE="$(curl -s "$AKASH_NET/rpc-nodes.txt" | shuf -n 1)"
             axios.get(this.$store.state.AKASH_NET + '/rpc-nodes.txt')
-                .then((res) => {
+                .then(async (res) => {
                     const nodes = res.data.split('\n');
                     const randomNode = nodes[Math.floor(Math.random()*nodes.length)];
                     this.$store.state.AKASH_NODE = randomNode;
                     console.log('NODE', this.$store.state.AKASH_NODE);
-                })
+                }),
         ])
-        .then(() => {
+        .then(async () => {
             // All get requests have finished at this point
             this.isFetching = false;
-            console.log("Done fetching");
+            this.balance = await this.getWalletBalanceByAddress(this.wallet.address)
         })
 
         
     },
     computed: {
+        backendUrl() {
+            return this.$store.getters.backendUrl;
+        },
         walletName() {
             return this.$route.params.walletName
         },
@@ -104,6 +108,22 @@ export default {
             }
 
             return wallet;
+        },
+        // TODO: needs testing
+        getWalletBalanceByAddress(walletAddress) {
+            const params = {
+                address: walletAddress,
+                node: this.$store.state.AKASH_NODE
+            }
+            console.log(params );
+            return axios.get(this.backendUrl + '/akash/balance', {params})
+                .then((res) => {
+                    if(res.data.balances.amount !== undefined) {
+                        return res.data.balances.amount;
+                    } else {
+                       return 0;
+                    }
+                });
         }
     }
 }

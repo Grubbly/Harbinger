@@ -58,6 +58,17 @@ class AkashController {
         const jsonifiedWalletImportDetails = JSON.parse(results.stdout);
         res.status(201).send(jsonifiedWalletImportDetails);
     }
+
+    // TODO: needs testing
+    async getWalletBalanceByAddress(req: express.Request, res: express.Response) {
+        log(req.query);    
+        const walletAddress: string = req.query.address as string;
+        const node: string = req.query.node as string;
+
+        const results = await akashService.getWalletBalanceByAddress(walletAddress, node);
+        const jsonifiedWalletBalanceDetails = JSON.parse(results.stdout);
+        res.status(200).send(jsonifiedWalletBalanceDetails);
+    }
 }
 
 export default new AkashController();

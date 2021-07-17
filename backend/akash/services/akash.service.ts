@@ -36,6 +36,11 @@ class AkashService {
     async importWalletByMnemonic(walletName: string, mnemonic: string) {
         return akashDao.importWalletByMnemonic(walletName, mnemonic);
     }
+
+    // TODO: needs testing
+    async getWalletBalanceByAddress(walletAddress: string, node: string) {
+        return akashDao.getWalletBalanceByAddress(walletAddress, node);
+    }
 }
 
 export default new AkashService();

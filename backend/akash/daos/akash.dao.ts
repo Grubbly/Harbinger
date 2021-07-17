@@ -52,6 +52,12 @@ class AkashDao {
         const command = `akash keys add ${walletName} --recover --output json`;
         return await ExecPromiseService.execWithStdin(command, mnemonic);
     }
+
+    // TODO: needs testing
+    async getWalletBalanceByAddress(walletAddress: string, node: string) {
+        const command = `akash query bank balances --node ${node} ${walletAddress} --output json`;
+        return await ExecPromiseService.exec(command);
+    }
 }
 
 export default new AkashDao();

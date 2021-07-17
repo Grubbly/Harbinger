@@ -58,6 +58,12 @@ export class AkashRoutes extends CommonRoutesConfig {
                 akashController.importWalletByMnemonic
             )
 
+        // TODO: Needs testing and middleware
+        this.app.route('/akash/balance')
+            .get(
+                akashController.getWalletBalanceByAddress
+            )
+
         return this.app;
     }
 }
