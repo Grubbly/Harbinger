@@ -23,12 +23,19 @@
                     </v-list>
                 </v-card>
             </v-col>
+
+            <!-- Certificate -->
+            <v-col cols='6'>
+                <CertificateCard />
+            </v-col>
+
         </v-row>
     </v-container>
 </template>
 
 <script>
 import axios from 'axios';
+import CertificateCard from './CertificateCard.vue';
 
 export default {
     name: 'WalletProfile',
@@ -38,6 +45,9 @@ export default {
             wallet: Object,
             balance: 0
         }
+    },
+    components: {
+        CertificateCard
     },
     mounted() {
         this.wallet = this.getWalletByName(this.walletName);

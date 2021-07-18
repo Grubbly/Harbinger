@@ -58,6 +58,19 @@ class AkashDao {
         const command = `akash query bank balances --node ${node} ${walletAddress} --output json`;
         return await ExecPromiseService.exec(command);
     }
+
+    // TODO: needs testing
+    async createCertificate(
+        akashChainId: string,
+        akashKeyringBackend: string,
+        akashKeyName: string,
+        akashNode: string,
+        feeInUAKT: string
+    ) {
+        const command = `akash tx cert create client --chain-id ${akashChainId.replace('\n','')} --keyring-backend ${akashKeyringBackend} --from ${akashKeyName} --node ${akashNode} --fees ${feeInUAKT}uakt`;
+
+        return await ExecPromiseService.exec(command);
+    }
 }
 
 export default new AkashDao();

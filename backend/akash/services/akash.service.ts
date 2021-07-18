@@ -41,6 +41,23 @@ class AkashService {
     async getWalletBalanceByAddress(walletAddress: string, node: string) {
         return akashDao.getWalletBalanceByAddress(walletAddress, node);
     }
+
+    // TODO: needs testing and DTO
+    async createCertificate(
+        akashChainId: string,
+        akashKeyringBackend: string,
+        akashKeyName: string,
+        akashNode: string,
+        feeInUAKT: string
+    ) {
+        return akashDao.createCertificate(
+            akashChainId,
+            akashKeyringBackend,
+            akashKeyName,
+            akashNode,
+            feeInUAKT
+        );
+    }
 }
 
 export default new AkashService();

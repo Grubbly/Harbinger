@@ -61,13 +61,34 @@ class AkashController {
 
     // TODO: needs testing
     async getWalletBalanceByAddress(req: express.Request, res: express.Response) {
-        log(req.query);    
         const walletAddress: string = req.query.address as string;
         const node: string = req.query.node as string;
 
         const results = await akashService.getWalletBalanceByAddress(walletAddress, node);
         const jsonifiedWalletBalanceDetails = JSON.parse(results.stdout);
         res.status(200).send(jsonifiedWalletBalanceDetails);
+    }
+
+    // TODO: needs testing
+    async createCertificate(req: express.Request, res: express.Response) {
+        const akashChainId = req.body.akashChainId;
+        const akashKeyringBackend = req.body.akashKeyringBackend;
+        const akashKeyName = req.body.akashKeyName;
+        const akashNode = req.body.akashNode;
+        const feeInUAKT = req.body.feeInUAKT;
+
+        log(`Got Certificate Create with req.body: ${req.body}`);
+
+        const results = await akashService.createCertificate(
+            akashChainId,
+            akashKeyringBackend,
+            akashKeyName,
+            akashNode,
+            feeInUAKT
+        );
+
+        const jsonifiedCertDetails = JSON.parse(results.stdout);
+        res.status(201).send(jsonifiedCertDetails);
     }
 }
 

@@ -64,6 +64,12 @@ export class AkashRoutes extends CommonRoutesConfig {
                 akashController.getWalletBalanceByAddress
             )
 
+        // TODO: Needs testing and middleware
+        this.app.route('/akash/certs')
+            .post(
+                akashController.createCertificate
+            )
+
         return this.app;
     }
 }
