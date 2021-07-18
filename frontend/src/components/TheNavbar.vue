@@ -1,10 +1,10 @@
 <template>
     <v-app-bar
       app
-      color='primary'
+      color='error'
       dark
     >
-      <h1 class='cursor-pointer' @click='goHome'>Wow look at this cool app title</h1>
+      <h1 class='cursor-pointer' @click='goHome'>Harbinger</h1>
     </v-app-bar>
 </template>
 

@@ -12,11 +12,11 @@ const vuetify = new Vuetify({
   theme: {
     themes: {
       light: {
-        primary: '#011126',
-        secondary: '#D92555',
-        accent: '#F28749',
-        error: '#BF2A2A',
-        info: '#2C2F73',
+        primary: '#ffffff',
+        secondary: '#161617',
+        accent: '#AAAAAA',
+        error: '#B83B3B',
+        info: '#282829',
         anchor: '#F28749'
       },
     },

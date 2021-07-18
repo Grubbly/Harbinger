@@ -1,7 +1,9 @@
 <template>
-  <v-app v-if="!isFetching">
+  <!-- TODO: REMOVE true here!  -->
+  <!-- Only doing this because im on an airplane :( -->
+  <v-app v-if="true || !isFetching">
     <TheNavbar />
-    <v-main>
+    <v-main class="anchor">
       <router-view/>
     </v-main>
   </v-app>

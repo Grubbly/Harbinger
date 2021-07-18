@@ -1,13 +1,13 @@
 <template>
-  <v-card @mouseenter="selectShow = true" @mouseleave="selectShow = false">
-    <v-card-title>{{ this.name }}</v-card-title>
-    <v-card-text>{{ this.address }}</v-card-text>
+  <v-card class="error" @mouseenter="selectShow = true" @mouseleave="selectShow = false">
+    <v-card-title class="primary--text">{{ this.name }}</v-card-title>
+    <v-card-text class="white--text">{{ this.address }}</v-card-text>
     
     <router-link :to="{ name: 'WalletProfile', params: {walletName: this.name}}">
         <v-fab-transition>
             <v-btn
                 v-show="selectShow"
-                color="secondary"
+                color="error"
                 fab
                 dark
                 small
@@ -21,7 +21,7 @@
     </router-link>
 
 
-    <v-card-actions class="info">
+    <v-card-actions class="primary">
         <v-spacer></v-spacer>
         <v-btn @click="onDeleteClicked" small icon>
             <v-icon>mdi-delete</v-icon>
