@@ -3,21 +3,21 @@
         <v-row>
             <!-- Title -->
             <v-col cols='12'>
-                <v-card class="fill-height" elevation='2'>
-                    <v-card-title>{{this.walletName}}</v-card-title>
-                    <v-card-text>{{this.balance}} AKT</v-card-text>
-                    <v-card-text>{{this.wallet.address}}</v-card-text>
+                <v-card class="error fill-height" elevation='2'>
+                    <v-card-title class="primary--text">{{this.walletName}}</v-card-title>
+                    <v-card-text class="primary--text">{{this.balance}} AKT</v-card-text>
+                    <v-card-text class="primary--text">{{this.wallet.address}}</v-card-text>
                 </v-card>
             </v-col>
 
             <!-- Environment Variables -->
             <v-col cols='6'>
                 <v-card>
-                    <v-list subheader two-line>
+                    <v-list subheader two-line class="error">
                         <v-list-item v-for="(item, key, index) in this.environmentVariables" :key="index">
                             <v-list-item-content>
                                 <v-list-item-title class="primary--text">{{key}}</v-list-item-title>
-                                <v-list-item-subtitle>{{item}}</v-list-item-subtitle>
+                                <v-list-item-subtitle class="primary--text">{{item}}</v-list-item-subtitle>
                             </v-list-item-content>
                         </v-list-item>
                     </v-list>
