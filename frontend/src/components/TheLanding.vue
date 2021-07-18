@@ -2,13 +2,13 @@
   <v-container class="custom-container-size d-flex justify-center align-center mt-5">
     <v-row>
       <v-col cols='12'>
+        <TheWalletCardGrid class='ma-5'/>    
+      </v-col>
+      <v-col cols='12'>
         <CreateWalletBtn />
       </v-col>
       <v-col cols='12'>
         <ImportWalletFromMnemonicBtn />
-      </v-col>
-      <v-col cols='12'>
-        <TheWalletCardGrid class='ma-5'/>    
       </v-col>
     </v-row>
   </v-container>
