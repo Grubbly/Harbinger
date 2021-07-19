@@ -7,7 +7,7 @@ An Akash deployment Electron app built using Sqlite, Express, Vue, and Node.
 
 ### Backend Installation / Quickstart
 
-Quickstart
+#### Quickstart
 
 ``` shell
 cd backend
@@ -30,7 +30,7 @@ npm run clean-debug
 
 ### Frontend Installation / Quickstart
  
-Quickstart Electron
+#### Quickstart Electron
 
 ```
 cd frontend
@@ -38,14 +38,14 @@ npm install
 npm run start
 ```
 
-Quickstart Web
+#### Quickstart Web
 ```
 cd frontend
 npm install
 npm run serve
 ```
 
-Quickstart Electron/Web With Hot Reload
+#### Quickstart Electron/Web With Hot Reload
 
 Terminal Process 1:
 ```
@@ -62,6 +62,8 @@ Terminal Process 2:
 npm run start
 # This will reflect activity from the web application in electron
 ```
+
+Note: Make sure `npm run serve` finsihes executing before `npm run start` or else you will not see anything on the electron app.
 
 ### Frontend Run Commands
 ```
