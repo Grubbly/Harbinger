@@ -4,7 +4,7 @@ const BrowserWindow = electron.BrowserWindow;
 
 // TODO: Change me to use logic
 let url;
-if (true || process.env.NODE_ENV === 'DEV') {
+if (process.env.NODE_ENV === 'DEV') {
     console.log("Dev");
     url = 'http://localhost:8080/';
 } else {
