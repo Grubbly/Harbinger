@@ -23,7 +23,7 @@ Currently, the SQLite database is not being used, but the boilerplate to start u
 Most of my backend development process used test driven development written using Mocha, Chai, and Superagent in hopes that if someone wanted to fork or contribute to this code they could test their newly added functionality works and integrates with the existing code base.
 
 
-The frontend uses Vue with Vuex and Vuetify for managing global app data and providing a visually appealing interface for users to interact with (I am a horrible artist :P).
+The frontend uses Electron & Vue with Vuex and Vuetify for managing global app data and providing a visually appealing interface for users to interact with (I am a horrible artist :P). Electron allows the app to be served as a cross platform desktop app or web app.
 
 
 ## Hackathon Notes / Future Work
