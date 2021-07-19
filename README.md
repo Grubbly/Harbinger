@@ -15,19 +15,6 @@ npm install
 npm run debug
 ```
 
-Command Details
-
-``` shell
-# Change directory to the backend
-cd backend
-
-# Install development dependencies
-npm install
-
-# Run the backend
-npm run debug
-```
-
 ### Backend Run Commands
 
 ``` shell
@@ -39,4 +26,48 @@ npm run test
 
 # Removes extra files such as sqlite database files
 npm run clean-debug
+```
+
+### Frontend Installation / Quickstart
+ 
+Quickstart Electron
+
+```
+cd frontend
+npm install
+npm run start
+```
+
+Quickstart Web
+```
+cd frontend
+npm install
+npm run serve
+```
+
+Quickstart Electron/Web With Hot Reload
+
+Terminal Process 1:
+```
+cd frontend
+npm install
+
+# Start web application w/ hot reload functionality
+npm run serve
+```
+
+Terminal Process 2:
+```
+# In another terminal or as a child process:
+npm run start
+# This will reflect activity from the web application in electron
+```
+
+### Frontend Run Commands
+```
+# Build the app and run it using electron
+npm run start
+
+# Start the app in browser
+npm run serve
 ```
