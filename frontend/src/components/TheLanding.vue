@@ -2,7 +2,10 @@
   <v-container class="custom-container-size d-flex justify-center align-center mt-5">
     <v-row>
       <v-col class='d-flex justify-center align-center' cols='12'>
-        <h1>{LOGO}Harbinger</h1>
+        <v-img contain height='10vh' width='10vw' src='@/assets/akashLogo.png'></v-img>
+      </v-col>
+      <v-col class='d-flex justify-center align-center' cols='12'>
+        <h1>Harbinger</h1>
       </v-col>
       <v-col cols='12'>
         <TheWalletCardGrid class='ma-5'/>    
