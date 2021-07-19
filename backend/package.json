@@ -1,5 +1,5 @@
 {
-  "name": "sevn-backend",
+  "name": "harbinger-backend",
   "version": "0.1.0",
   "description": "The Sqlite Express and Node portion of the SEVN stack. Database operation are handled by TypeORM.",
   "main": "app.ts",
