@@ -9,8 +9,29 @@ An Akash deployment Electron app built using Sqlite, Express, Vue, and Node.
 ## Early Development Frontend Images
 
 ![](./docs/images/populatedFrontend.PNG)
+#### Frontend with wallets.
+
+---
+
+![](./docs/images/testing.PNG)
+#### All backend tests passing! :)
+
+---
+
 ![](./docs/images/mnemonic.PNG)
+#### Mnemonic display after wallet creation.
+
+---
+
+![](./docs/images/debugLogging.PNG)
+#### Backend debug mode with API logging.
+
+---
+
 ![](./docs/images/walletProfile.PNG)
+#### Wallet details. This is where more app functionality will be added later.
+
+---
 
 ## Acknowledgements
 
